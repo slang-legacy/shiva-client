@@ -14,7 +14,7 @@ Shiva.ActiveAlbum = {
 
 Shiva.Controllers = {
     ArtistList: function($scope, $http) {
-        $http.get('/api/artists').success(function(data) {
+        $http.get('http://localhost:9002/artists').success(function(data) {
             $scope.artists = data;
             // HACK
             document.getElementById('artistname').innerHTML = 'Music Player';
@@ -32,7 +32,7 @@ Shiva.Controllers = {
             x = 0;
 
         if (artistSlug) {
-            $http.get('/api/artist/' + artistSlug + '?fulltree=true').success(function (data) {
+            $http.get('http://localhost:9002/artist/' + artistSlug + '?fulltree=true').success(function (data) {
                 $scope.artist = data;
                 if (songSlug) {
                     x = data.albums.length;
@@ -58,7 +58,7 @@ Shiva.Controllers = {
                     $scope.$apply(function() {
                         $scope.player = Shiva.Player;
                     });
-                }
+                };
             }
             Shiva.Player.audio.addEventListener('timeupdate', Shiva.Player.audio.timeUpdateHandler, false);
             Shiva.Player.audio.addEventListener('loadedmetadata', function(){
@@ -73,7 +73,7 @@ Shiva.Controllers = {
         $scope.player = Shiva.Player;
         // $scope.activeAlbum = Shiva.ActiveAlbum;
     }
-}
+};
 
 Shiva.Playlist = {
     tracks: [],
