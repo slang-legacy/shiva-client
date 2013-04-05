@@ -1,35 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="shiva">
   <head>
+    <meta http-equiv="Content-Type" content="text/html" charset="utf-8">
     <title>Shiva » Music Player</title>
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/index.css">
-    <script src="js/angular-1.1.1/angular.js" type="text/javascript"></script>
-    <script src="js/app.js" type="text/javascript"></script>
-    <script src="js/controllers.js" type="text/javascript"></script>
-    <script type="text/javascript">
-      if ("geolocation" in navigator) {
-       navigator.geolocation.getCurrentPosition(function (position) {
-        Shiva.geolocation = position.coords;
-       });
-      }
-    </script>
+    <link href="favicon.ico" rel="shortcut icon">
+    <link rel="stylesheet" type="text/css" href="./css/main.css">
   </head>
   <body>
-<div class="container">
-  <div class="page-header">
-    <h1><a href="#/">Shiva</a>»<span id="artistname">Music Player</span>
-      <!-- Dinosaurs will slowly die -->
-    </h1>
-  </div>
-  <noscript>
-    <h2>Please enable javascript.</h2>
-  </noscript>
-  <div ng-view="ng-view"></div>
-  <footer><p>Shiva by <a href="http://twitter.com/tuxie_">@tuxie_</a> © 2013. <a href="https://github.com/tooxie/shiva-client">Fork me</a></p>
+<noscript><p>Um, this is awkward&hellip; most of the functionality of this site relies on JavaScript, a programming language that helps add interactivity to web sites. So I can&#39;t really do anything until you enable it. If you don&#39;t know how to enable JavaScript, look <a href="http://www.activatejavascript.org">here</a>.</p>
 
-  </footer>
-</div>
+</noscript>
   </body>
+  <script data-main="js/main" type="text/javascript" src="js/require-jquery.js"></script>
 </html><script>protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://'; address = protocol + window.location.host + window.location.pathname + '/ws'; socket = new WebSocket(address);
 socket.onmessage = function(msg) { msg.data == 'reload' && window.location.reload() }</script>
