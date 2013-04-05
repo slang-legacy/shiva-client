@@ -12,7 +12,7 @@ exports.ignore_files = ['_*', 'readme*', '.git', '.gitignore', '.DS_Store']
 # layout is the key, and the path to the layout is the value.
 
 exports.layouts =
-  default: 'layout.jade'
+  default: '_layout.jade'
   # 'special.jade': 'layout2.jade'
 
 # Locals will be made available on every page. They can be
