@@ -2,3 +2,46 @@ noscript
 	:markdown
 		Um, this is awkward&hellip; most of the functionality of this site relies on JavaScript, a programming language that helps add interactivity to web sites. So I can't really do anything until you enable it. If you don't know how to enable JavaScript, look [here](http://www.activatejavascript.org).
 
+div
+	//now_playing
+	img#album_art(src="http://upload.wikimedia.org/wikipedia/en/e/e9/Sufjanstevensageofadz.jpg")
+	#current_song
+	#controls
+		#shuffle
+		#repeat
+		#back
+		#play_pause
+		#forward
+		#volume
+	#progress
+	#visualization
+
+ul#sidebar
+	li
+		input#search(type="text")
+	li All
+	li
+		p Sort
+		ul
+			li Album
+			li Artist
+			li Year
+			li Song
+	li
+		p Playlists
+		ul#playlists
+		input#new_playlist(type="text") Add New Playlist...
+	li
+		p Stats
+		p#total_songs
+
+ul#header
+	li
+	li #
+	li title
+	li rating
+	li length
+	li plays
+	li skips
+
+#songs

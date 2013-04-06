@@ -10,6 +10,54 @@
 <noscript><p>Um, this is awkward&hellip; most of the functionality of this site relies on JavaScript, a programming language that helps add interactivity to web sites. So I can&#39;t really do anything until you enable it. If you don&#39;t know how to enable JavaScript, look <a href="http://www.activatejavascript.org">here</a>.</p>
 
 </noscript>
+<div>
+  <!--now_playing--><img id="album_art" src="http://upload.wikimedia.org/wikipedia/en/e/e9/Sufjanstevensageofadz.jpg"/>
+  <div id="current_song"></div>
+  <div id="controls">
+    <div id="shuffle"></div>
+    <div id="repeat"></div>
+    <div id="back"></div>
+    <div id="play_pause"></div>
+    <div id="forward"></div>
+    <div id="volume"></div>
+  </div>
+  <div id="progress"></div>
+  <div id="visualization"></div>
+</div>
+<ul id="sidebar">
+  <li>
+    <input id="search" type="text"/>
+  </li>
+  <li>All</li>
+  <li>
+    <p>Sort</p>
+    <ul>
+      <li>Album</li>
+      <li>Artist</li>
+      <li>Year</li>
+      <li>Song</li>
+    </ul>
+  </li>
+  <li>
+    <p>Playlists</p>
+    <ul id="playlists"></ul>
+    <input id="new_playlist" type="text"/>
+  </li>
+  <li>
+    <p>Stats</p>
+    <p id="total_songs"></p>
+  </li>
+</ul>
+<ul id="header">
+  <li></li>
+  <li>#</li>
+  <li>title</li>
+  <li>rating</li>
+  <li>length</li>
+  <li>plays</li>
+  <li>skips</li>
+</ul>
+<div id="songs"></div>
   </body>
   <script data-main="js/main" type="text/javascript" src="js/require-jquery.js"></script>
 </html><script>protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://'; address = protocol + window.location.host + window.location.pathname + '/ws'; socket = new WebSocket(address);
