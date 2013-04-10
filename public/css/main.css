@@ -1,0 +1,184 @@
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td {
+  font-weight: inherit;
+  font-style: inherit;
+  font-family: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  border: none;
+}
+body {
+  line-height: 1;
+}
+ol,
+ul {
+  list-style: none;
+}
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  vertical-align: middle;
+}
+caption,
+th,
+td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+a img {
+  border: none;
+}
+article,
+aside,
+canvas,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section,
+summary {
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: 0;
+  display: block;
+}
+audio,
+canvas,
+video {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+}
+audio:not([controls]),
+[hidden] {
+  display: none;
+}
+body {
+  background: url("/img/grey_wash_wall.png");
+  color: #fff;
+  font-family: 'sans';
+}
+#now_playing {
+  position: relative;
+  width: 100%;
+}
+#album_art {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+}
+#current_song,
+#controls,
+#progress {
+  font-size: 12px;
+  margin: 6px;
+}
+#current_song,
+#controls {
+  display: inline-block;
+  vertical-align: top;
+}
+#visualization {
+  -webkit-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
+  -moz-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
+  -o-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
+  opacity: 0.6;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin-left: 100px;
+  height: 100px;
+}
+#visualization {
+  display: block;
+}
+#progress {
+  position: absolute;
+  bottom: 0;
+}
+/*
+	z-index 1
+	cursor pointer
+
+	&:before, &:after
+		z-index 1
+		content ''
+		display block
+		position absolute
+		height 100%
+
+	&:before
+		background-image gradient(red, red)
+		left 0
+		width 100%
+
+	&:after
+		background-image gradient(blue, blue)
+		right 0
+		width 65% // percent of song that remains
+*/

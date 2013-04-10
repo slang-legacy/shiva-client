@@ -3,10 +3,10 @@
 
   require.config({
     paths: {
-      underscore: 'components/underscore/underscore',
-      backbone: 'components/backbone/backbone',
-      jquery: 'components/jquery/jquery.min',
-      localstorage: "components/backbone.localStorage/backbone.localStorage"
+      underscore: '../components/underscore/underscore',
+      backbone: '../components/backbone/backbone',
+      jquery: '../components/jquery/jquery.min',
+      localstorage: "../components/backbone.localStorage/backbone.localStorage"
     },
     shim: {
       underscore: {
@@ -21,7 +21,7 @@
     }
   });
 
-  require(['jquery', 'structure', 'tipsy', 'jgrowl'], function($, App) {
+  require(['jquery', 'wavesurfer', 'tipsy', 'jgrowl'], function($, WaveSurfer) {
     /*
     	if ("geolocation" in navigator)
     		navigator.geolocation.getCurrentPosition((position) ->
@@ -29,7 +29,7 @@
     		)
     */
 
-    var notify, p;
+    var notify, p, wavesurfer;
 
     p = function(text) {
       return console.log(text);
@@ -40,13 +40,39 @@
       args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
       return (_ref = $("#jGrowl-container")).jGrowl.apply(_ref, args);
     };
-    return window.onerror = function(msg, url, line) {
+    window.onerror = function(msg, url, line) {
       notify("errorMsg: " + msg + " on line " + line, {
         theme: 'error',
         sticky: true
       });
       return false;
     };
+    return wavesurfer = (function() {
+      wavesurfer = Object.create(WaveSurfer);
+      wavesurfer.init({
+        canvas: document.querySelector("#visualization"),
+        fillParent: true,
+        markerColor: "rgba(0, 0, 0, 0.5)",
+        frameMargin: 0.1,
+        maxSecPerPx: parseFloat(location.hash.substring(1)),
+        scrollParent: true,
+        loadPercent: true,
+        waveColor: "white",
+        progressColor: "white",
+        loadingColor: "white",
+        cursorColor: "black"
+      });
+      wavesurfer.load("test-audio/test.mp3");
+      document.addEventListener("click", function(e) {
+        var action;
+
+        action = e.target.dataset && e.target.dataset.action;
+        if (action && action in eventHandlers) {
+          return eventHandlers[action](e);
+        }
+      });
+      return wavesurfer;
+    })();
   });
 
 }).call(this);

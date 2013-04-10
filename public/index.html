@@ -10,9 +10,8 @@
 <noscript><p>Um, this is awkward&hellip; most of the functionality of this site relies on JavaScript, a programming language that helps add interactivity to web sites. So I can&#39;t really do anything until you enable it. If you don&#39;t know how to enable JavaScript, look <a href="http://www.activatejavascript.org">here</a>.</p>
 
 </noscript>
-<div>
-  <!--now_playing--><img id="album_art" src="http://upload.wikimedia.org/wikipedia/en/e/e9/Sufjanstevensageofadz.jpg"/>
-  <div id="current_song"></div>
+<div id="now_playing"><img id="album_art" src="http://upload.wikimedia.org/wikipedia/en/e/e9/Sufjanstevensageofadz.jpg"/>
+  <p id="current_song">Futile Devices by Sufjan Stevens<br>from Age of Adz</p>
   <div id="controls">
     <div id="shuffle"></div>
     <div id="repeat"></div>
@@ -21,12 +20,12 @@
     <div id="forward"></div>
     <div id="volume"></div>
   </div>
-  <div id="progress"></div>
-  <div id="visualization"></div>
+  <div id="progress">2:51 of 5:21</div>
+  <canvas id="visualization"></canvas>
 </div>
 <ul id="sidebar">
   <li>
-    <input id="search" type="text"/>
+    <input id="search" type="text" value="Search"/>
   </li>
   <li>All</li>
   <li>
@@ -41,7 +40,7 @@
   <li>
     <p>Playlists</p>
     <ul id="playlists"></ul>
-    <input id="new_playlist" type="text"/>
+    <input id="new_playlist" type="text" value="Add New Playlist..."/>
   </li>
   <li>
     <p>Stats</p>

@@ -2,10 +2,9 @@ noscript
 	:markdown
 		Um, this is awkward&hellip; most of the functionality of this site relies on JavaScript, a programming language that helps add interactivity to web sites. So I can't really do anything until you enable it. If you don't know how to enable JavaScript, look [here](http://www.activatejavascript.org).
 
-div
-	//now_playing
+#now_playing
 	img#album_art(src="http://upload.wikimedia.org/wikipedia/en/e/e9/Sufjanstevensageofadz.jpg")
-	#current_song
+	p#current_song Futile Devices by Sufjan Stevens<br>from Age of Adz
 	#controls
 		#shuffle
 		#repeat
@@ -13,12 +12,12 @@ div
 		#play_pause
 		#forward
 		#volume
-	#progress
-	#visualization
+	#progress 2:51 of 5:21
+	canvas#visualization
 
 ul#sidebar
 	li
-		input#search(type="text")
+		input#search(type="text", value="Search")
 	li All
 	li
 		p Sort
@@ -30,7 +29,7 @@ ul#sidebar
 	li
 		p Playlists
 		ul#playlists
-		input#new_playlist(type="text") Add New Playlist...
+		input#new_playlist(type="text", value="Add New Playlist...")
 	li
 		p Stats
 		p#total_songs
