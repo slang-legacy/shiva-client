@@ -42,16 +42,6 @@ require ['jquery', 'wavesurfer', 'tipsy', 'jgrowl'], ($, WaveSurfer) -> # 'struc
 		wavesurfer = Object.create(WaveSurfer)
 		wavesurfer.init
 			canvas: document.querySelector("#visualization")
-			fillParent: true
-			markerColor: "rgba(0, 0, 0, 0.5)"
-			frameMargin: 0.1
-			maxSecPerPx: parseFloat(location.hash.substring(1))
-			scrollParent: true
-			loadPercent: true
-			waveColor: "white"
-			progressColor: "white"
-			loadingColor: "white"
-			cursorColor: "black"
 
 		wavesurfer.load "test-audio/test.mp3"
 

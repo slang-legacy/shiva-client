@@ -242,23 +242,22 @@ define ['jquery', 'backbone'], ($, Backbone) ->
 
 	WaveSurfer.Drawer =
 		defaultParams:
-			waveColor: "#999"
-			progressColor: "#333"
-			cursorColor: "#ddd"
-			markerColor: "#eee"
-			loadingColor: "#999"
+			waveColor: "white"
+			progressColor: "white"
+			loadingColor: "white"
+			cursorColor: "black"
+			markerColor: "rgba(0, 0, 0, 0.5)"
 			cursorWidth: 1
-			loadPercent: false
+			loadPercent: true
 			loadingBars: 20
 			barHeight: 1
 			barMargin: 10
 			markerWidth: 1
 			frameMargin: 0
-			fillParent: false
+			fillParent: true
 			maxSecPerPx: false
-			scrollParent: false
+			scale: window.devicePixelRatio
 
-		scale: window.devicePixelRatio
 		init: (params) ->
 			my = this
 			
@@ -327,19 +326,6 @@ define ['jquery', 'backbone'], ($, Backbone) ->
 		progress: (percents) ->
 			@cursorPos = ~~(@width * percents)
 			@redraw()
-			if @params.scrollParent
-				half = @parent.clientWidth / 2
-				target = @cursorPos - half
-				offset = target - @parent.scrollLeft
-				
-				# if the cursor is currently visible...
-				if offset >= -half and offset < half
-					
-					# we'll limit the "re-center" rate.
-					rate = 5
-					offset = Math.max(-rate, Math.min(rate, offset))
-					target = @parent.scrollLeft + offset
-				@canvas.parentNode.scrollLeft = ~~target
 
 		drawBuffer: (buffer) ->
 			@getPeaks buffer
@@ -361,12 +347,6 @@ define ['jquery', 'backbone'], ($, Backbone) ->
 			
 			# Or draw an image.
 			else @drawImage()  if @image
-			
-			# Draw markers.
-			Object.keys(@markers).forEach (key) ->
-				marker = my.markers[key]
-				percentage = ~~(my.width * marker.percentage)
-				my.drawMarker percentage, marker.width, marker.color
 
 			@drawCursor()
 

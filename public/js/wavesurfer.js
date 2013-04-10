@@ -285,23 +285,22 @@
     };
     WaveSurfer.Drawer = {
       defaultParams: {
-        waveColor: "#999",
-        progressColor: "#333",
-        cursorColor: "#ddd",
-        markerColor: "#eee",
-        loadingColor: "#999",
+        waveColor: "white",
+        progressColor: "white",
+        loadingColor: "white",
+        cursorColor: "black",
+        markerColor: "rgba(0, 0, 0, 0.5)",
         cursorWidth: 1,
-        loadPercent: false,
+        loadPercent: true,
         loadingBars: 20,
         barHeight: 1,
         barMargin: 10,
         markerWidth: 1,
         frameMargin: 0,
-        fillParent: false,
+        fillParent: true,
         maxSecPerPx: false,
-        scrollParent: false
+        scale: window.devicePixelRatio
       },
-      scale: window.devicePixelRatio,
       init: function(params) {
         var my;
 
@@ -380,21 +379,8 @@
         return this.maxPeak *= 1 + this.params.frameMargin;
       },
       progress: function(percents) {
-        var half, offset, rate, target;
-
         this.cursorPos = ~~(this.width * percents);
-        this.redraw();
-        if (this.params.scrollParent) {
-          half = this.parent.clientWidth / 2;
-          target = this.cursorPos - half;
-          offset = target - this.parent.scrollLeft;
-          if (offset >= -half && offset < half) {
-            rate = 5;
-            offset = Math.max(-rate, Math.min(rate, offset));
-            target = this.parent.scrollLeft + offset;
-          }
-          return this.canvas.parentNode.scrollLeft = ~~target;
-        }
+        return this.redraw();
       },
       drawBuffer: function(buffer) {
         this.getPeaks(buffer);
@@ -418,13 +404,6 @@
             this.drawImage();
           }
         }
-        Object.keys(this.markers).forEach(function(key) {
-          var marker, percentage;
-
-          marker = my.markers[key];
-          percentage = ~~(my.width * marker.percentage);
-          return my.drawMarker(percentage, marker.width, marker.color);
-        });
         return this.drawCursor();
       },
       clear: function() {

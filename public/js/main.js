@@ -50,17 +50,7 @@
     return wavesurfer = (function() {
       wavesurfer = Object.create(WaveSurfer);
       wavesurfer.init({
-        canvas: document.querySelector("#visualization"),
-        fillParent: true,
-        markerColor: "rgba(0, 0, 0, 0.5)",
-        frameMargin: 0.1,
-        maxSecPerPx: parseFloat(location.hash.substring(1)),
-        scrollParent: true,
-        loadPercent: true,
-        waveColor: "white",
-        progressColor: "white",
-        loadingColor: "white",
-        cursorColor: "black"
+        canvas: document.querySelector("#visualization")
       });
       wavesurfer.load("test-audio/test.mp3");
       document.addEventListener("click", function(e) {
