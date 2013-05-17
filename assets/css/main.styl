@@ -1,5 +1,9 @@
 global-reset()
 
+bgcolor = rgba(0, 0, 0, 0.3)
+dark-bgcolor = rgba(0, 0, 0, 0.5)
+light-grey = lighten(grey, 20)
+
 album_art_width = 100px
 
 body
@@ -64,3 +68,59 @@ body
 		right 0
 		width 65% // percent of song that remains
 */
+
+#sidebar
+	display inline-block
+	& > li
+		border-right 1px solid dark-bgcolor
+	input
+		max-width 80%
+	ul, li
+		padding-top 5%
+		padding-bottom 5%
+	& > li
+		background-color bgcolor
+		border-bottom 1px solid bgcolor
+		padding-left 15%
+	li > ul
+		//display none
+		border-bottom none
+		padding-left 5%
+		& li
+			padding-left 0
+			font-size 80%
+	#new_playlist
+		//display none
+		#playlists *
+			border-bottom none
+			padding-top 5%
+			padding-bottom 5%
+	#quarterborder
+		height 5%
+		border-bottom none
+		background transparent
+	&:nth-child(4)
+		border-bottom none
+	& > li:last-child
+		padding-top 0
+		border-bottom none
+		border-right none
+		background transparent
+
+
+#search[type=text]
+	color light-grey
+	background bgcolor
+	padding 4%
+	padding-left 5%
+	border 0 none
+	border-radius 45px
+	box-shadow inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset
+	outline none
+
+#new_playlist[type=text]
+	font-size 65%
+	color light-grey
+	background transparent
+	border none
+	outline none
