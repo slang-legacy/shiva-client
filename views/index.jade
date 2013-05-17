@@ -17,30 +17,34 @@ noscript
 
 ul#sidebar
 	li
-		input#search(type="text", value="Search")
-	li All
+		input#search(type="text", placeholder="Search", onfocus="this.placeholder = ''", onblur="this.placeholder = 'Search'")
+			include svg/_search
+	li ALL
 	li
-		p Sort
+		p SORT
 		ul
 			li Album
 			li Artist
 			li Year
 			li Song
 	li
-		p Playlists
+		p PLAYLISTS
 		ul#playlists
-		input#new_playlist(type="text", value="Add New Playlist...")
+			li#Chill Chill
+			li#RockNRoll Rock 'N Roll
+		input#new_playlist(type="text", placeholder="Create New Playlist...", onfocus="this.placeholder = ''", onblur="this.placeholder = 'Create New Playlist...'")
+	li#quarterborder
 	li
-		p Stats
+		p STATS
 		p#total_songs
 
 ul#header
 	li
 	li #
-	li title
-	li rating
-	li length
-	li plays
-	li skips
+	li Song Title
+	li Rating
+	li Length
+	li Plays
+	li Skips
 
 #songs

@@ -25,11 +25,11 @@
 </div>
 <ul id="sidebar">
   <li>
-    <input id="search" type="text" value="Search"/>
+    <input id="search" type="text" placeholder="Search" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search'"/>
   </li>
-  <li>All</li>
+  <li>ALL</li>
   <li>
-    <p>Sort</p>
+    <p>SORT</p>
     <ul>
       <li>Album</li>
       <li>Artist</li>
@@ -38,23 +38,27 @@
     </ul>
   </li>
   <li>
-    <p>Playlists</p>
-    <ul id="playlists"></ul>
-    <input id="new_playlist" type="text" value="Add New Playlist..."/>
+    <p>PLAYLISTS</p>
+    <ul id="playlists">
+      <li id="Chill">Chill</li>
+      <li id="RockNRoll">Rock 'N Roll</li>
+    </ul>
+    <input id="new_playlist" type="text" placeholder="Create New Playlist..." onfocus="this.placeholder = ''" onblur="this.placeholder = 'Create New Playlist...'"/>
   </li>
+  <li id="quarterborder"></li>
   <li>
-    <p>Stats</p>
+    <p>STATS</p>
     <p id="total_songs"></p>
   </li>
 </ul>
 <ul id="header">
   <li></li>
   <li>#</li>
-  <li>title</li>
-  <li>rating</li>
-  <li>length</li>
-  <li>plays</li>
-  <li>skips</li>
+  <li>Song Title</li>
+  <li>Rating</li>
+  <li>Length</li>
+  <li>Plays</li>
+  <li>Skips</li>
 </ul>
 <div id="songs"></div>
   </body>
