@@ -2,18 +2,20 @@ noscript
 	:markdown
 		Um, this is awkward&hellip; most of the functionality of this site relies on JavaScript, a programming language that helps add interactivity to web sites. So I can't really do anything until you enable it. If you don't know how to enable JavaScript, look [here](http://www.activatejavascript.org).
 
-#now_playing
+#status_bar
 	img#album_art(src="/img/cover.jpg")
-	p#current_song Futile Devices by Sufjan Stevens<br>from Age of Adz
-	#controls
-		#shuffle
-		#repeat
-		#back
-		#play_pause
-		#forward
-		#volume
-	#progress 2:51 of 5:21
-	canvas#visualization
+	#now_playing
+		p#current_song Futile Devices by Sufjan Stevens<br>from Age of Adz
+		#controls
+			#shuffle
+			#repeat
+			#back
+			#play_pause
+			#forward
+			#volume
+		#progress
+			p 2:51 of 5:21
+		canvas#visualization
 
 ul#sidebar
 	li

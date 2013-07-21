@@ -25,9 +25,8 @@ define ['jquery'], ($) ->
 			@loadImage @image, @drawImage.bind(@) if @image
 
 		prepareContext: ->
-			console.log 'preparing context'
-			w = @canvas.width = $(@parent).width() - 100
-			h = @canvas.height = $(@parent).height() - 3
+			w = @canvas.width = $(@parent).width()
+			h = @canvas.height = $(@parent).height()
 			@canvas.style.width = w + "px"
 			@canvas.style.height = h + "px"
 			console.log "width:#{w} height:#{h} scale:#{@scale}"
@@ -74,12 +73,12 @@ define ['jquery'], ($) ->
 			@maxPeak *= 1 + @frameMargin
 
 		progress: (percents) ->
-			@cursorPos = ~~(@width * percents)
-			@redraw()
+			$('#progress').css(width:"#{~~(percents*1000)/10}%")
 
 		drawBuffer: (buffer) ->
 			@getPeaks buffer
 			@progress 0
+			@redraw()
 
 		
 		###*

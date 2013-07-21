@@ -34,9 +34,8 @@
 
       Drawer.prototype.prepareContext = function() {
         var h, w;
-        console.log('preparing context');
-        w = this.canvas.width = $(this.parent).width() - 100;
-        h = this.canvas.height = $(this.parent).height() - 3;
+        w = this.canvas.width = $(this.parent).width();
+        h = this.canvas.height = $(this.parent).height();
         this.canvas.style.width = w + "px";
         this.canvas.style.height = h + "px";
         console.log("width:" + w + " height:" + h + " scale:" + this.scale);
@@ -93,13 +92,15 @@
       };
 
       Drawer.prototype.progress = function(percents) {
-        this.cursorPos = ~~(this.width * percents);
-        return this.redraw();
+        return $('#progress').css({
+          width: "" + (~~(percents * 1000) / 10) + "%"
+        });
       };
 
       Drawer.prototype.drawBuffer = function(buffer) {
         this.getPeaks(buffer);
-        return this.progress(0);
+        this.progress(0);
+        return this.redraw();
       };
 
       /**
