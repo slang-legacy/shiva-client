@@ -74,6 +74,7 @@ define ['jquery'], ($) ->
 
 		progress: (percents) ->
 			$('#progress').css(width:"#{~~(percents*1000)/10}%")
+			$('#progress p').html("#{~~wavesurfer.backend.getCurrentTime()} of #{~~wavesurfer.backend.getDuration()}")
 
 		drawBuffer: (buffer) ->
 			@getPeaks buffer
