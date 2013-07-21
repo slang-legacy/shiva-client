@@ -5,10 +5,8 @@
 
   define(['jquery', 'backbone', 'jgrowl', 'localstorage'], function($, Backbone) {
     var Account, AccountView, AppView, NavView, Page, PageView, PagesCollection, ProgressBar, Router, notify, _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8;
-
     notify = function() {
       var args, _ref;
-
       args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
       return (_ref = $("#jGrowl-container")).jGrowl.apply(_ref, args);
     };
@@ -58,7 +56,6 @@
 
       NavView.prototype.render = function() {
         var page;
-
         page = this.model.current_page().get('name');
         document.title = "" + (page.replace("_", " ").title_case()) + " | CSD";
         this.$el.find("\#" + page + "_nav").attr("checked", true);
@@ -154,7 +151,6 @@
 
       AccountView.prototype.initialize = function() {
         var k, v, _ref4;
-
         _.bindAll(this);
         this.model.on('change:token', this.render);
         this.model.view = this;
@@ -251,7 +247,6 @@
 
       PageView.prototype.render = function() {
         var control, control_name, _i, _j, _len, _len1, _ref7, _ref8, _results;
-
         if (this.model.get('selected')) {
           this.el.style.display = 'block';
           _ref7 = $('#local_controls button');
@@ -306,7 +301,6 @@
 
       PagesCollection.prototype.change_page = function(page_name) {
         var page;
-
         page = this.find(function(page_obj) {
           return page_obj.get('name') === page_name;
         });

@@ -15,7 +15,7 @@ require.config(
 )
 
 
-require ['jquery', 'wavesurfer', 'tipsy', 'jgrowl'], ($, WaveSurfer) -> # 'structure',
+require ['jquery', 'wavesurfer', 'tipsy', 'jgrowl'], ($, WaveSurfer) ->
 	###
 	if ("geolocation" in navigator)
 		navigator.geolocation.getCurrentPosition((position) ->
@@ -37,17 +37,14 @@ require ['jquery', 'wavesurfer', 'tipsy', 'jgrowl'], ($, WaveSurfer) -> # 'struc
 
 		false #let default error handler continue
 
+require ['wavesurfer', 'webaudio'], (WaveSurfer, WebAudio) ->
+	wavesurfer = new WaveSurfer(
+		canvas: document.querySelector('#visualization')
+		backend: new WebAudio()
+	)
+	wavesurfer.load 'test-audio/test.mp3'
+	wavesurfer.playAt 0
 
-	wavesurfer = (->
-		wavesurfer = Object.create(WaveSurfer)
-		wavesurfer.init
-			canvas: document.querySelector("#visualization")
-
-		wavesurfer.load "test-audio/test.mp3"
-
-		document.addEventListener "click", (e) ->
-			action = e.target.dataset and e.target.dataset.action
-			eventHandlers[action] e  if action and action of eventHandlers
-
-		wavesurfer
-	)()
+	document.addEventListener "click", (e) ->
+		action = e.target.dataset and e.target.dataset.action
+		eventHandlers[action] e if action and action of eventHandlers

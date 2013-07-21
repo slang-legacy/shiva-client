@@ -5,12 +5,10 @@
     };
     $.fn.jGrowl = function(m, o) {
       var args;
-
       if ($.isFunction(this.each)) {
         args = arguments;
         return this.each(function() {
           var self;
-
           self = this;
           if ($(this).data("jGrowl.instance") === undefined) {
             $(this).data("jGrowl.instance", $.extend(new $.fn.jGrowl(), {
@@ -67,7 +65,6 @@
       },
       render: function(notification) {
         var message, o, self;
-
         self = this;
         message = notification.message;
         o = notification.options;
