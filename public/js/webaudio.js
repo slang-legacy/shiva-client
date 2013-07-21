@@ -1,8 +1,10 @@
 (function() {
+  window.AudioContext = window.AudioContext || window.webkitAudioContext;
+
   define(['jquery'], function($) {
     var WebAudio;
     WebAudio = (function() {
-      WebAudio.prototype.ac = new (window.AudioContext || window.webkitAudioContext);
+      WebAudio.prototype.ac = new AudioContext();
 
       /*
       		Initializes the analyser with given params.
@@ -48,7 +50,7 @@
         this.source && this.source.disconnect();
         this.source = source;
         this.source.connect(this.analyser);
-        return this.source.connect(this.proc);
+        return this.source.connect(this.destination);
       };
 
       /*
@@ -58,12 +60,13 @@
 
 
       WebAudio.prototype.loadData = function(audioData, cb) {
+        var _this = this;
         this.pause();
         return this.ac.decodeAudioData(audioData, (function(buffer) {
-          this.currentBuffer = buffer;
-          this.lastStart = 0;
-          this.lastPause = 0;
-          this.startTime = null;
+          _this.currentBuffer = buffer;
+          _this.lastStart = 0;
+          _this.lastPause = 0;
+          _this.startTime = null;
           return cb(buffer);
         }), Error);
       };
@@ -94,13 +97,13 @@
         this.pause();
         this.setSource(this.ac.createBufferSource());
         this.source.buffer = this.currentBuffer;
-        if (null === start) {
+        if (start == null) {
           start = this.getCurrentTime();
         }
-        if (null === end) {
+        if (end == null) {
           end = this.source.buffer.duration;
         }
-        if (null === delay) {
+        if (delay == null) {
           delay = 0;
         }
         this.lastStart = start;

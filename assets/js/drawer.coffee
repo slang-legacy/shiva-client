@@ -37,7 +37,6 @@ define ['jquery'], ($) ->
 			console.error "Canvas size is zero." if not @width or not @height
 
 		getPeaks: (buffer) ->
-			console.log 'getting peaks'
 			frames = buffer.getChannelData(0).length
 			
 			k = frames / @width # Frames per pixel

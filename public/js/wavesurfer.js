@@ -23,7 +23,6 @@
         this.bindClick(this.canvas, function(percents) {
           return _this.playAt(percents);
         });
-        console.log('loaded');
       }
 
       WaveSurfer.prototype.onAudioProcess = function() {
@@ -93,6 +92,8 @@
       WaveSurfer.prototype.drawBuffer = function() {
         if (this.backend.currentBuffer) {
           return this.drawer.drawBuffer(this.backend.currentBuffer);
+        } else {
+          return console.log('error: currentBuffer isn\'t defined');
         }
       };
 

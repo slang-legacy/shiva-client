@@ -48,8 +48,7 @@
   });
 
   require(['wavesurfer', 'webaudio'], function(WaveSurfer, WebAudio) {
-    var wavesurfer;
-    wavesurfer = new WaveSurfer({
+    window.wavesurfer = new WaveSurfer({
       canvas: document.querySelector('#visualization'),
       backend: new WebAudio()
     });

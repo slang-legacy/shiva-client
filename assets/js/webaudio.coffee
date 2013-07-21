@@ -1,6 +1,9 @@
+#fix prefixing
+window.AudioContext = window.AudioContext || window.webkitAudioContext;
+
 define ['jquery'], ($) ->
 	class WebAudio
-		ac: new (window.AudioContext or window.webkitAudioContext)
+		ac: new AudioContext()
 		
 		###
 		Initializes the analyser with given params.
@@ -25,6 +28,10 @@ define ['jquery'], ($) ->
 			@dataArray = new Uint8Array(@analyser.fftSize)
 			@paused = true
 
+			#oscillator = @ac.createOscillator()
+			#oscillator.connect(@destination)
+			#oscillator.noteOn(0)
+
 		bindUpdate: (callback) ->
 			@proc.onaudioprocess = =>
 				callback()
@@ -36,7 +43,7 @@ define ['jquery'], ($) ->
 			@source and @source.disconnect()
 			@source = source
 			@source.connect @analyser
-			@source.connect @proc
+			@source.connect @destination
 		
 		###
 		Loads audiobuffer.
@@ -44,7 +51,7 @@ define ['jquery'], ($) ->
 		###
 		loadData: (audioData, cb) ->
 			@pause()
-			@ac.decodeAudioData audioData, ((buffer) ->
+			@ac.decodeAudioData audioData, ((buffer) =>
 				@currentBuffer = buffer
 				@lastStart = 0
 				@lastPause = 0
@@ -72,9 +79,9 @@ define ['jquery'], ($) ->
 			@pause()
 			@setSource @ac.createBufferSource()
 			@source.buffer = @currentBuffer
-			start = @getCurrentTime() if null is start
-			end = @source.buffer.duration if null is end
-			delay = 0 if null is delay
+			start = @getCurrentTime() if not start?
+			end = @source.buffer.duration if not end?
+			delay = 0 if not delay?
 			@lastStart = start
 			@startTime = @ac.currentTime
 			@source.noteGrainOn delay, start, end - start

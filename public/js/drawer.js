@@ -50,7 +50,6 @@
 
       Drawer.prototype.getPeaks = function(buffer) {
         var c, chan, frames, i, k, l, p, peak, secPerPx, sum, targetWidth, val, vals;
-        console.log('getting peaks');
         frames = buffer.getChannelData(0).length;
         k = frames / this.width;
         if (this.maxSecPerPx) {

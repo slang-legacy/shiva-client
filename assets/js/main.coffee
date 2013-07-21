@@ -38,7 +38,7 @@ require ['jquery', 'wavesurfer', 'tipsy', 'jgrowl'], ($, WaveSurfer) ->
 		false #let default error handler continue
 
 require ['wavesurfer', 'webaudio'], (WaveSurfer, WebAudio) ->
-	wavesurfer = new WaveSurfer(
+	window.wavesurfer = new WaveSurfer(
 		canvas: document.querySelector('#visualization')
 		backend: new WebAudio()
 	)

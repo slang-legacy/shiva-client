@@ -16,9 +16,6 @@ define ['jquery', 'drawer'], ($, Drawer) ->
 			@bindClick @canvas, (percents) =>
 				@playAt percents
 
-			console.log 'loaded'
-
-
 		onAudioProcess: ->
 			@drawer.progress @backend.getPlayedPercents() unless @backend.isPaused()
 
@@ -66,7 +63,10 @@ define ['jquery', 'drawer'], ($, Drawer) ->
 			[position, duration]
 
 		drawBuffer: ->
-			@drawer.drawBuffer @backend.currentBuffer if @backend.currentBuffer
+			if @backend.currentBuffer
+				@drawer.drawBuffer @backend.currentBuffer
+			else
+				console.log 'error: currentBuffer isn\'t defined'
 
 		###*
 		 * Loads an audio file via XHR.
