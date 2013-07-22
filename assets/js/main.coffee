@@ -55,7 +55,6 @@ require [
 	#)
 
 	window.wavesurfer = new WaveSurfer(
-		canvas: document.querySelector('#visualization')
 		backend: new WebAudio()
 	)
 

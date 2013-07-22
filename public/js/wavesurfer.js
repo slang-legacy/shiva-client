@@ -1,5 +1,5 @@
 (function() {
-  define(['jquery', 'drawer'], function($, Drawer) {
+  define(['jquery'], function($) {
     var WaveSurfer;
     WaveSurfer = (function() {
       function WaveSurfer(options) {
@@ -14,13 +14,11 @@
           canvas: void 0
         };
         $.extend(this, defaults, options);
-        this.drawer = new Drawer({
-          canvas: this.canvas
-        });
+        this.drawer = visualization;
         this.backend.bindUpdate(function() {
           return _this.onAudioProcess();
         });
-        this.bindClick(this.canvas, function(percents) {
+        this.bindClick(this.drawer.el, function(percents) {
           return _this.playAt(percents);
         });
       }

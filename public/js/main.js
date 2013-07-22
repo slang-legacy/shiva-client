@@ -49,7 +49,6 @@
 
   require(['wavesurfer', 'webaudio', 'collection'], function(WaveSurfer, WebAudio, Tracks) {
     window.wavesurfer = new WaveSurfer({
-      canvas: document.querySelector('#visualization'),
       backend: new WebAudio()
     });
     document.addEventListener("click", function(e) {

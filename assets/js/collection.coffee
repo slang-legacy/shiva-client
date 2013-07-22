@@ -171,12 +171,81 @@ define(['jquery', 'deepmodel', 'localstorage', 'test_data'], ($, Backbone) ->
 	class AlbumCollection extends Backbone.Collection
 		model: Album
 
+	class Visualization extends Backbone.View
+		el: $('#visualization')
+
+		initialize: ->
+			@scale = window.devicePixelRatio
+			@parent = @el.parentNode
+			@cc = @el.getContext("2d")
+
+		progress: (percents) ->
+			library.current_track().set(progress: ~~(percents * 1000) / 1000)
+
+		getPeaks: (buffer) ->
+			frames = buffer.getChannelData(0).length
+			
+			k = frames / @width # Frames per pixel
+			@peaks = []
+			@maxPeak = -Infinity
+			i = 0
+			while i < @width
+				sum = 0
+				c = 0
+				while c < buffer.numberOfChannels
+					chan = buffer.getChannelData(c)
+					vals = chan.subarray(i * k, (i + 1) * k)
+					peak = -Infinity
+					p = 0
+					l = vals.length
+
+					while p < l
+						val = Math.abs(vals[p])
+						peak = val if val > peak
+						p++
+					sum += peak
+					c++
+				@peaks[i] = sum
+				if sum > @maxPeak then @maxPeak = sum
+				i++
+
+		drawBuffer: (buffer) ->
+			w = @el.width = $(@parent).width()
+			h = @el.height = $(@parent).height()
+			@width = w * @scale
+			@height = h * @scale
+			console.error "Canvas size is zero." if not @width or not @height
+
+			@getPeaks buffer
+			@clear()
+
+			# Draw WebAudio buffer peaks.
+			@peaks.forEach (peak, index) =>
+				w = 1
+				h = Math.round(peak * (@height / @maxPeak))
+				x = index * w
+				y = Math.round(@height - h)
+				@cc.fillStyle = 'white'
+				@cc.fillRect x, y, w, h
+
+		clear: ->
+			@cc.clearRect 0, 0, @width, @height
+
+		drawLoading: (progress) ->
+			barHeight = 6 * @scale
+			y = ~~(@height - barHeight)
+			@cc.fillStyle = 'white'
+
+			width = Math.round(@width * progress)
+			@cc.fillRect 0, y, width, barHeight
+
 	window.albums = new AlbumCollection(window.sample_albums)
 	window.artists = new ArtistCollection(window.sample_artists)
 
 	window.library = new TrackCollection()
 	window.tracks = new TrackCollectionView(collection: library)
 	window.statusBar = new StatusBar(collection: library)
+	window.visualization = new Visualization()
 
 	library.add sample_tracks
 	return tracks

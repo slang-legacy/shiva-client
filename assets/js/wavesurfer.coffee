@@ -1,4 +1,4 @@
-define ['jquery', 'drawer'], ($, Drawer) ->
+define ['jquery'], ($) ->
 	class WaveSurfer
 		constructor: (options = {}) ->
 			defaults =
@@ -8,12 +8,12 @@ define ['jquery', 'drawer'], ($, Drawer) ->
 
 			$.extend @, defaults, options
 
-			@drawer = new Drawer(canvas: @canvas)
+			@drawer = visualization
 
 			@backend.bindUpdate =>
 				@onAudioProcess()
 
-			@bindClick @canvas, (percents) =>
+			@bindClick @drawer.el, (percents) =>
 				@playAt percents
 
 		onAudioProcess: ->

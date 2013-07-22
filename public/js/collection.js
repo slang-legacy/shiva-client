@@ -27,7 +27,7 @@
   };
 
   define(['jquery', 'deepmodel', 'localstorage', 'test_data'], function($, Backbone) {
-    var Album, AlbumCollection, Artist, ArtistCollection, StatusBar, Track, TrackCollection, TrackCollectionView, TrackView, _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8;
+    var Album, AlbumCollection, Artist, ArtistCollection, StatusBar, Track, TrackCollection, TrackCollectionView, TrackView, Visualization, _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9;
     Track = (function(_super) {
       __extends(Track, _super);
 
@@ -300,6 +300,103 @@
       return AlbumCollection;
 
     })(Backbone.Collection);
+    Visualization = (function(_super) {
+      __extends(Visualization, _super);
+
+      function Visualization() {
+        _ref9 = Visualization.__super__.constructor.apply(this, arguments);
+        return _ref9;
+      }
+
+      Visualization.prototype.el = $('#visualization');
+
+      Visualization.prototype.initialize = function() {
+        this.scale = window.devicePixelRatio;
+        this.parent = this.el.parentNode;
+        return this.cc = this.el.getContext("2d");
+      };
+
+      Visualization.prototype.progress = function(percents) {
+        return library.current_track().set({
+          progress: ~~(percents * 1000) / 1000
+        });
+      };
+
+      Visualization.prototype.getPeaks = function(buffer) {
+        var c, chan, frames, i, k, l, p, peak, sum, val, vals, _results;
+        frames = buffer.getChannelData(0).length;
+        k = frames / this.width;
+        this.peaks = [];
+        this.maxPeak = -Infinity;
+        i = 0;
+        _results = [];
+        while (i < this.width) {
+          sum = 0;
+          c = 0;
+          while (c < buffer.numberOfChannels) {
+            chan = buffer.getChannelData(c);
+            vals = chan.subarray(i * k, (i + 1) * k);
+            peak = -Infinity;
+            p = 0;
+            l = vals.length;
+            while (p < l) {
+              val = Math.abs(vals[p]);
+              if (val > peak) {
+                peak = val;
+              }
+              p++;
+            }
+            sum += peak;
+            c++;
+          }
+          this.peaks[i] = sum;
+          if (sum > this.maxPeak) {
+            this.maxPeak = sum;
+          }
+          _results.push(i++);
+        }
+        return _results;
+      };
+
+      Visualization.prototype.drawBuffer = function(buffer) {
+        var h, w,
+          _this = this;
+        w = this.el.width = $(this.parent).width();
+        h = this.el.height = $(this.parent).height();
+        this.width = w * this.scale;
+        this.height = h * this.scale;
+        if (!this.width || !this.height) {
+          console.error("Canvas size is zero.");
+        }
+        this.getPeaks(buffer);
+        this.clear();
+        return this.peaks.forEach(function(peak, index) {
+          var x, y;
+          w = 1;
+          h = Math.round(peak * (_this.height / _this.maxPeak));
+          x = index * w;
+          y = Math.round(_this.height - h);
+          _this.cc.fillStyle = 'white';
+          return _this.cc.fillRect(x, y, w, h);
+        });
+      };
+
+      Visualization.prototype.clear = function() {
+        return this.cc.clearRect(0, 0, this.width, this.height);
+      };
+
+      Visualization.prototype.drawLoading = function(progress) {
+        var barHeight, width, y;
+        barHeight = 6 * this.scale;
+        y = ~~(this.height - barHeight);
+        this.cc.fillStyle = 'white';
+        width = Math.round(this.width * progress);
+        return this.cc.fillRect(0, y, width, barHeight);
+      };
+
+      return Visualization;
+
+    })(Backbone.View);
     window.albums = new AlbumCollection(window.sample_albums);
     window.artists = new ArtistCollection(window.sample_artists);
     window.library = new TrackCollection();
@@ -309,6 +406,7 @@
     window.statusBar = new StatusBar({
       collection: library
     });
+    window.visualization = new Visualization();
     library.add(sample_tracks);
     return tracks;
   });
