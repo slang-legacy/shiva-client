@@ -180,5 +180,4 @@ define(['jquery', 'deepmodel', 'localstorage', 'test_data'], ($, Backbone) ->
 
 	library.add sample_tracks
 	return tracks
-
 )
