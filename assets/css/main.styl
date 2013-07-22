@@ -6,6 +6,7 @@ body
 	background url("/img/grey_wash_wall.png")
 	color white
 	font-family 'sans'
+	vertical-align top
 
 #status_bar
 	min-width 100%
@@ -69,25 +70,11 @@ body
 		z-index 2
 		padding 6px
 	
+#sidebar, #songs, #header
+	display inline-block
+	
 
-/*
-	z-index 1
-	cursor pointer
+#songs
 
-	&:before, &:after
-		z-index 1
-		content ''
-		display block
-		position absolute
-		height 100%
-
-	&:before
-		background-image gradient(red, red)
-		left 0
-		width 100%
-
-	&:after
-		background-image gradient(blue, blue)
-		right 0
-		width 65% // percent of song that remains
-*/
+	.playing
+		font-weight bold

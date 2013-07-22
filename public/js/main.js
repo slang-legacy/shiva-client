@@ -1,12 +1,16 @@
 (function() {
-  var __slice = [].slice;
+  var SHIVA_URL,
+    __slice = [].slice;
+
+  SHIVA_URL = 'http://localhost:9002';
 
   require.config({
     paths: {
       underscore: '../components/underscore/underscore',
       backbone: '../components/backbone/backbone',
       jquery: '../components/jquery/jquery.min',
-      localstorage: "../components/backbone.localStorage/backbone.localStorage"
+      localstorage: "../components/backbone.localStorage/backbone.localStorage",
+      deepmodel: "../components/backbone-deep-model/distribution/deep-model.min"
     },
     shim: {
       underscore: {
@@ -15,6 +19,9 @@
       backbone: {
         deps: ['underscore', 'jquery'],
         exports: 'Backbone'
+      },
+      deepmodel: {
+        deps: ['underscore']
       },
       tipsy: ['jquery'],
       jgrowl: ['jquery']
@@ -29,11 +36,10 @@
     		)
     */
 
-    var notify, p;
-    p = function(text) {
+    window.p = function(text) {
       return console.log(text);
     };
-    notify = function() {
+    window.notify = function() {
       var args, _ref;
       args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
       return (_ref = $("#jGrowl-container")).jGrowl.apply(_ref, args);
@@ -47,13 +53,12 @@
     };
   });
 
-  require(['wavesurfer', 'webaudio'], function(WaveSurfer, WebAudio) {
+  require(['wavesurfer', 'webaudio', 'collection', 'test_data'], function(WaveSurfer, WebAudio, Tracks) {
+    Tracks.collection.add(sample_tracks);
     window.wavesurfer = new WaveSurfer({
       canvas: document.querySelector('#visualization'),
       backend: new WebAudio()
     });
-    wavesurfer.load('test-audio/test.mp3');
-    wavesurfer.playAt(0);
     return document.addEventListener("click", function(e) {
       var action;
       action = e.target.dataset && e.target.dataset.action;

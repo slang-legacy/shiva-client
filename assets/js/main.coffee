@@ -1,15 +1,19 @@
+SHIVA_URL = 'http://localhost:9002'
 require.config(
 	paths:
 		underscore: '../components/underscore/underscore'
 		backbone: '../components/backbone/backbone'
 		jquery: '../components/jquery/jquery.min'
 		localstorage: "../components/backbone.localStorage/backbone.localStorage"
+		deepmodel: "../components/backbone-deep-model/distribution/deep-model.min"
 	shim:
 		underscore:
 			exports: '_'
 		backbone:
 			deps: ['underscore', 'jquery']
 			exports: 'Backbone'
+		deepmodel:
+			deps: ['underscore']
 		tipsy: ['jquery']
 		jgrowl: ['jquery']
 )
@@ -24,8 +28,8 @@ require ['jquery', 'wavesurfer', 'tipsy', 'jgrowl'], ($, WaveSurfer) ->
 	###
 
 	# friendly little aliases
-	p = (text) -> console.log text
-	notify = (args...) -> $("#jGrowl-container").jGrowl args...
+	window.p = (text) -> console.log text
+	window.notify = (args...) -> $("#jGrowl-container").jGrowl args...
 
 	#error logger
 	window.onerror = (msg, url, line) ->
@@ -37,13 +41,25 @@ require ['jquery', 'wavesurfer', 'tipsy', 'jgrowl'], ($, WaveSurfer) ->
 
 		false #let default error handler continue
 
-require ['wavesurfer', 'webaudio'], (WaveSurfer, WebAudio) ->
+require [
+	'wavesurfer',
+	'webaudio',
+	'collection',
+	'test_data'
+], (WaveSurfer, WebAudio, Tracks) ->
+	
+	#$.ajax(
+	#	url: "#{SHIVA_URL}/tracks"
+	#).done( (data) ->
+	#	p data
+	#)
+
+	Tracks.collection.add sample_tracks
+
 	window.wavesurfer = new WaveSurfer(
 		canvas: document.querySelector('#visualization')
 		backend: new WebAudio()
 	)
-	wavesurfer.load 'test-audio/test.mp3'
-	wavesurfer.playAt 0
 
 	document.addEventListener "click", (e) ->
 		action = e.target.dataset and e.target.dataset.action

@@ -1,0 +1,8 @@
+{
+  "name": "backbone-deep-model",
+  "version": "0.10.4",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/powmedia/backbone-deep-model.git"
+  }
+}

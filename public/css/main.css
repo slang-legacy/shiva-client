@@ -119,6 +119,7 @@ body {
   background: url("/img/grey_wash_wall.png");
   color: #fff;
   font-family: 'sans';
+  vertical-align: top;
 }
 #status_bar {
   min-width: 100%;
@@ -198,24 +199,11 @@ body {
   z-index: 2;
   padding: 6px;
 }
-/*
-	z-index 1
-	cursor pointer
-
-	&:before, &:after
-		z-index 1
-		content ''
-		display block
-		position absolute
-		height 100%
-
-	&:before
-		background-image gradient(red, red)
-		left 0
-		width 100%
-
-	&:after
-		background-image gradient(blue, blue)
-		right 0
-		width 65% // percent of song that remains
-*/
+#sidebar,
+#songs,
+#header {
+  display: inline-block;
+}
+#songs .playing {
+  font-weight: bold;
+}
