@@ -1,8 +1,32 @@
 (function() {
-  var __hasProp = {}.hasOwnProperty,
+  var format_sec,
+    __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  define(['jquery', 'deepmodel', 'localstorage', ''], function($, Backbone) {
+  format_sec = function(secs) {
+    var h, m, pad, s;
+    pad = function(n) {
+      if (n < 10) {
+        return "0" + n;
+      } else {
+        return n;
+      }
+    };
+    h = Math.floor(secs / 3600);
+    m = Math.floor((secs / 3600) % 1 * 60);
+    s = Math.floor((secs / 60) % 1 * 60);
+    if (h === 0) {
+      if (m === 0) {
+        return "" + s + "s";
+      } else {
+        return "" + m + ":" + (pad(s));
+      }
+    } else {
+      return "h:" + (pad(m)) + ":" + (pad(s));
+    }
+  };
+
+  define(['jquery', 'deepmodel', 'localstorage', 'test_data'], function($, Backbone) {
     var Album, AlbumCollection, Artist, ArtistCollection, StatusBar, Track, TrackCollection, TrackCollectionView, TrackView, _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8;
     Track = (function(_super) {
       __extends(Track, _super);
@@ -13,14 +37,20 @@
       }
 
       Track.prototype.defaults = {
-        playing: false
+        playing: false,
+        elapsed: 0
       };
 
-      Track.prototype.play = function() {
-        this.set({
-          'playing': true
+      Track.prototype.update_playing = function() {
+        if (this.get('playing')) {
+          return wavesurfer.load("" + (this.get('files.audio/mp3')));
+        }
+      };
+
+      Track.prototype.update_elapsed = function() {
+        return this.set({
+          elapsed: ~~(this.get('progress') * this.get('1length'))
         });
-        return wavesurfer.load("" + (this.get('files.audio/mp3')));
       };
 
       Track.prototype.sync = function() {
@@ -36,10 +66,12 @@
           })[0]);
         }
         if (album_id = this.get('album.id')) {
-          return this.set('album', albums.where({
+          this.set('album', albums.where({
             id: album_id
           })[0]);
         }
+        this.on('change:progress', this.update_elapsed);
+        return this.on('change:playing', this.update_playing);
       };
 
       return Track;
@@ -64,6 +96,14 @@
         } else {
           return this.$el.removeClass('playing');
         }
+      };
+
+      TrackView.prototype.play = function() {
+        return library.change_track(this.model.get('id'));
+      };
+
+      TrackView.prototype.events = {
+        'click': 'play'
       };
 
       TrackView.prototype.initialize = function() {
@@ -109,10 +149,6 @@
         } else {
           return p("" + track_id + " doesn't exist");
         }
-      };
-
-      TrackCollection.prototype.initialize = function() {
-        return _.bindAll(this);
       };
 
       return TrackCollection;
@@ -162,12 +198,26 @@
 
 
       StatusBar.prototype.render = function() {
-        this.current_track = this.collection.current_track();
-        p(this.current_track);
-        $('#current_song').html("" + (this.current_track.get('title')) + " by " + (this.current_track.get('artist').get('name')) + "\n<br/>\nfrom " + (this.current_track.get('album').get('name')));
-        return $('#album_art').attr({
-          src: this.current_track.get('album').get('cover')
-        });
+        var album, artist, current_track;
+        current_track = this.collection.current_track();
+        p(current_track);
+        if (current_track.get('artist') != null) {
+          artist = " by " + (current_track.get('artist').get('name'));
+        } else {
+          artist = '';
+        }
+        if (current_track.get('album') != null) {
+          album = "<br/>from " + (current_track.get('album').get('name'));
+          $('#album_art').attr({
+            src: current_track.get('album').get('cover')
+          });
+        } else {
+          album = '';
+          $('#album_art').attr({
+            src: 'http://wortraub.com/wp-content/uploads/2012/07/Vinyl_Close_Up.jpg'
+          });
+        }
+        return $('#current_song').html("" + (current_track.get('title')) + artist + album);
       };
 
       /**
@@ -176,11 +226,19 @@
       */
 
 
-      StatusBar.prototype.update_progress = function() {};
+      StatusBar.prototype.update_progress = function() {
+        var current_track;
+        current_track = this.collection.current_track();
+        $('#progress').html("<p>" + (format_sec(current_track.get('elapsed'))) + " of\n" + (format_sec(current_track.get('1length'))) + " </p>");
+        return $('#progress').css({
+          width: "" + (current_track.get('progress') * 100) + "%"
+        });
+      };
 
       StatusBar.prototype.initialize = function() {
         _.bindAll(this);
-        return this.collection.on('change:playing', this.render);
+        this.collection.on('change:playing', this.render);
+        return this.collection.on('change:progress', this.update_progress);
       };
 
       return StatusBar;
@@ -211,10 +269,6 @@
 
       ArtistCollection.prototype.model = Artist;
 
-      ArtistCollection.prototype.initialize = function() {
-        return _.bindAll(this);
-      };
-
       return ArtistCollection;
 
     })(Backbone.Collection);
@@ -243,23 +297,20 @@
 
       AlbumCollection.prototype.model = Album;
 
-      AlbumCollection.prototype.initialize = function() {
-        return _.bindAll(this);
-      };
-
       return AlbumCollection;
 
     })(Backbone.Collection);
     window.albums = new AlbumCollection(window.sample_albums);
     window.artists = new ArtistCollection(window.sample_artists);
     window.library = new TrackCollection();
-    window.Tracks = new TrackCollectionView({
+    window.tracks = new TrackCollectionView({
       collection: library
     });
     window.statusBar = new StatusBar({
       collection: library
     });
-    return Tracks;
+    library.add(sample_tracks);
+    return tracks;
   });
 
 }).call(this);

@@ -92,10 +92,9 @@
       };
 
       Drawer.prototype.progress = function(percents) {
-        $('#progress').css({
-          width: "" + (~~(percents * 1000) / 10) + "%"
+        return library.current_track().set({
+          progress: ~~(percents * 1000) / 1000
         });
-        return $('#progress p').html("" + (~~wavesurfer.backend.getCurrentTime()) + " of " + (~~wavesurfer.backend.getDuration()));
       };
 
       Drawer.prototype.drawBuffer = function(buffer) {

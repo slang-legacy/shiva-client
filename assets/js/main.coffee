@@ -6,6 +6,7 @@ require.config(
 		jquery: '../components/jquery/jquery.min'
 		localstorage: "../components/backbone.localStorage/backbone.localStorage"
 		deepmodel: "../components/backbone-deep-model/distribution/deep-model.min"
+		moment: "../components/moment/min/moment.min"
 	shim:
 		underscore:
 			exports: '_'
@@ -32,20 +33,19 @@ require ['jquery', 'wavesurfer', 'tipsy', 'jgrowl'], ($, WaveSurfer) ->
 	window.notify = (args...) -> $("#jGrowl-container").jGrowl args...
 
 	#error logger
-	window.onerror = (msg, url, line) ->
-		notify "errorMsg: #{msg} on line #{line}",
-			theme: 'error'
-			sticky: true
+	#window.onerror = (msg, url, line) ->
+	#	notify "errorMsg: #{msg} on line #{line}",
+	#		theme: 'error'
+	#		sticky: true
 
 		#TODO: post error to server to record
 
-		false #let default error handler continue
+	#	false #let default error handler continue
 
 require [
 	'wavesurfer',
 	'webaudio',
 	'collection',
-	'test_data'
 ], (WaveSurfer, WebAudio, Tracks) ->
 	
 	#$.ajax(
@@ -53,8 +53,6 @@ require [
 	#).done( (data) ->
 	#	p data
 	#)
-
-	Tracks.collection.add sample_tracks
 
 	window.wavesurfer = new WaveSurfer(
 		canvas: document.querySelector('#visualization')
@@ -64,3 +62,5 @@ require [
 	document.addEventListener "click", (e) ->
 		action = e.target.dataset and e.target.dataset.action
 		eventHandlers[action] e if action and action of eventHandlers
+
+	library.change_track(1269)

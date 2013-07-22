@@ -73,8 +73,7 @@ define ['jquery'], ($) ->
 			@maxPeak *= 1 + @frameMargin
 
 		progress: (percents) ->
-			$('#progress').css(width:"#{~~(percents*1000)/10}%")
-			$('#progress p').html("#{~~wavesurfer.backend.getCurrentTime()} of #{~~wavesurfer.backend.getDuration()}")
+			library.current_track().set(progress: ~~(percents * 1000) / 1000)
 
 		drawBuffer: (buffer) ->
 			@getPeaks buffer
