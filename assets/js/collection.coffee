@@ -51,7 +51,10 @@ define(['jquery', 'deepmodel', 'localstorage', 'test_data'], ($, Backbone) ->
 	class TrackView extends Backbone.View
 		render: ->
 			@$el.html """
-				#{@model.get('title')}
+			<ul class="track">
+				<li class="title">#{@model.get('title')}</li>
+				<li class="duration">#{format_sec @model.get('1length')}</li>
+			</ul>
 			"""
 			@update_playing()
 

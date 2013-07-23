@@ -47,7 +47,8 @@
     };
   });
 
-  require(['wavesurfer', 'webaudio', 'collection'], function(WaveSurfer, WebAudio, Tracks) {
+  require(['wavesurfer', 'webaudio', 'collection', 'autocomplete'], function(WaveSurfer, WebAudio, Tracks) {
+    var search;
     window.wavesurfer = new WaveSurfer({
       backend: new WebAudio()
     });
@@ -58,7 +59,8 @@
         return eventHandlers[action](e);
       }
     });
-    return library.change_track(1269);
+    library.change_track(1269);
+    return search = new AutoComplete('search_bar', ['Apple', 'Banana', 'Orange']);
   });
 
 }).call(this);

@@ -20,7 +20,12 @@ require.config(
 )
 
 
-require ['jquery', 'wavesurfer', 'tipsy', 'jgrowl'], ($, WaveSurfer) ->
+require [
+	'jquery',
+	'wavesurfer',
+	'tipsy',
+	'jgrowl'
+], ($, WaveSurfer) ->
 	###
 	if ("geolocation" in navigator)
 		navigator.geolocation.getCurrentPosition((position) ->
@@ -46,6 +51,7 @@ require [
 	'wavesurfer',
 	'webaudio',
 	'collection',
+	'autocomplete'
 ], (WaveSurfer, WebAudio, Tracks) ->
 	
 	#$.ajax(
@@ -63,3 +69,5 @@ require [
 		eventHandlers[action] e if action and action of eventHandlers
 
 	library.change_track(1269)
+
+	search = new AutoComplete('search_bar', ['Apple', 'Banana', 'Orange'])

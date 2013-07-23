@@ -86,7 +86,7 @@
       }
 
       TrackView.prototype.render = function() {
-        this.$el.html("" + (this.model.get('title')));
+        this.$el.html("<ul class=\"track\">\n	<li class=\"title\">" + (this.model.get('title')) + "</li>\n	<li class=\"duration\">" + (format_sec(this.model.get('1length'))) + "</li>\n</ul>");
         return this.update_playing();
       };
 

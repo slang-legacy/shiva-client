@@ -199,11 +199,32 @@ body {
   z-index: 2;
   padding: 6px;
 }
-#sidebar,
-#songs,
-#header {
+#sidebar {
+  width: 200px;
+}
+#library {
+  position: absolute;
+  left: 200px;
+  top: 100px;
+  right: 0;
+  bottom: 0;
+}
+#header li {
   display: inline-block;
 }
 #songs .playing {
   font-weight: bold;
+}
+#songs .track {
+  margin: 10px 0;
+}
+#songs .track li {
+  display: inline-block;
+  vertical-align: top;
+}
+#songs .track .title {
+  width: 300px;
+}
+#songs .track .duration {
+  width: 70px;
 }

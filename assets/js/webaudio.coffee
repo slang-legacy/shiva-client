@@ -28,10 +28,6 @@ define ['jquery'], ($) ->
 			@dataArray = new Uint8Array(@analyser.fftSize)
 			@paused = true
 
-			#oscillator = @ac.createOscillator()
-			#oscillator.connect(@destination)
-			#oscillator.noteOn(0)
-
 		bindUpdate: (callback) ->
 			@proc.onaudioprocess = =>
 				callback()
